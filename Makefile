@@ -6,7 +6,7 @@ NAME=nsub
 all: build
 
 build: bin/nsub
-	@echo Build successful.
+	echo Build successful.
 
 run: bin/nsub
 	bin/nsub

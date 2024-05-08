@@ -25,8 +25,7 @@ utils/desktop.o: utils/desktop.[ch] utils/array.h
 # $(OBJECTS): $(HEADERS)
 
 ../bin/libutils.o: $(OBJECTS)
-	mkdir -p ../bin
-	# note: -r = --relocatable, but former also works with Clang
+	if not exist ../bin mkdir ../bin
 	$(LD) -r $(OBJECTS) -o $@
 
 clean:

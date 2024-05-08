@@ -58,7 +58,7 @@ int init_desktop(desktop_t *me, const char filename[], int best_size) {
 	me->name = strdup(filename);
 
 	// Get extension an remove ".desktop" from name
-	char *ext = rindex(me->name, '.');
+	char *ext = strrchr(me->name, '.');
 	if (ext) {
 		size_t idot = (ext - me->name);
 		ext++;
@@ -72,10 +72,10 @@ int init_desktop(desktop_t *me, const char filename[], int best_size) {
 	me->icon_file = desktop_find_icon(me->name, best_size);
 
 	// Pretify default name (remove dir part)
-	char *slash = rindex(me->name, '/');
+	char *slash = strrchr(me->name, '/');
 	if (slash && !slash[1]) {
 		slash[0] = '\0';
-		slash = rindex(me->name, '/');
+		slash = strrchr(me->name, '/');
 	}
 	if (slash) {
 		char *copy = strdup(slash + 1);
@@ -143,9 +143,9 @@ int init_desktop(desktop_t *me, const char filename[], int best_size) {
 				me->exec = strdup(line->string + strlen(startsWith));
 				// TODO: %f %F %u %U %i %c %k: inject values instead
 				char *cars = "ifFuUck";
-				for (char *ptr = index(me->exec, '%'); ptr;
-						ptr = index(ptr, '%')) {
-					if (index(cars, ptr[1])) {
+				for (char *ptr = strchr(me->exec, '%'); ptr;
+						ptr = strchr(ptr, '%')) {
+					if (strchr(cars, ptr[1])) {
 						ptr[0] = ' ';
 						ptr[1] = ' ';
 					}
